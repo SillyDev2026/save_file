@@ -3,7 +3,11 @@ EnableGlobals()
 local IO = require("io")
 local PlayerData = {}
 
-PlayerData.path = "players/user/zombies_progression_framework/player.dat"
+function savePath(workshop_id, saveType)
+    return "players\\311210\\" .. workshop_id .. "\\" .. saveType
+end
+
+PlayerData.path = savePath(3726841077, "save.json")
 PlayerData.version = 1
 
 PlayerData.schema = {
@@ -63,7 +67,6 @@ function PlayerData.load()
                 currentNamespace = section
             else
                 if currentNamespace == "player" then
-                    -- format: key:type=value
                     local left, valueStr = line:match("^(.-)=(.+)$")
                     if left and valueStr then
                         local keyPart, t = left:match("^(.-):(.*)$")
@@ -80,6 +83,7 @@ function PlayerData.load()
             end
         end
     end
+
     file:close()
 end
 
